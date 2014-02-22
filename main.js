@@ -63,6 +63,23 @@ $(function() {
         }]
     });
 
+    $('input[name="server-host"]').blur(function() {
+        SERVER_HOST = $(this).val();
+    });
+
+    $('input[name="admin-pass"]').blur(function() {
+        ADMIN_PASS = $(this).val();
+    });
+
+    $('input[name="refresh-delay"]').blur(function() {
+        REFRESH_DELAY = $(this).val();
+    });
+
+    $('.options-title').click(function() {
+        $('.options-block').toggle('slide');
+        $('.arrow').toggleClass('collapsed');
+    });
+
     $('button[data-action="new"]').click(function() {
         $.ajax({
             url: SERVER_HOST + '/admin/new',
@@ -79,7 +96,7 @@ $(function() {
         });
     });
 
-    $('button[data-action="reset"]').click(function() {
+    $('button[data-action="reset-scores"]').click(function() {
         $.ajax({
             url: SERVER_HOST + '/admin/reset',
             type: 'POST',
@@ -91,6 +108,18 @@ $(function() {
             },
             error: showErrorDialog
         });
+    });
+
+    $('button[data-action="reset-graph"]').click(function() {
+        while(chart.series.length > 0)
+            chart.series[0].remove(true);
+        chart.addSeries({
+            name: 'progress',
+            color: '#AA4643',
+            dashStyle: 'shortdot',
+            data: [],
+            yAxis: 1
+        }, false);
     });
 });
 

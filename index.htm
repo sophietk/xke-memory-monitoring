@@ -11,29 +11,67 @@
         <script type="text/javascript" src="main.js"></script>
 
         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/css/bootstrap.min.css">
+        <style>
+        .options-title {
+            cursor: pointer;
+        }
+        .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #999;
+        }
+        .arrow.collapsed {
+            border-top: 8px solid #999;
+            border-bottom: none;
+        }
+        </style>
     </head>
     <body>
 
 <div class="container">
-
-    <h1>Live scores</h1>
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-    <h1>Admin</h1>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div>
-            <div class="col-lg-2">
-                <div class="input-group">
-                    <input type="number" placeholder="size" class="form-control game-size" min="2" max="6" value="2">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" data-action="new">new game</button>
-                    </span>
-                </div>
+    <section>
+        <h2 class="options-title">Options <div class="arrow collapsed"></div></h2>
+        <div class="row options-block">
+            <div class="col-md-4">
+                <label>Server host</label>
+                <input type="text" name="server-host" class="form-control" placeholder="Server host" value="http://127.0.0.1:3000">
             </div>
-            <button type="button" class="btn btn-warning" data-action="reset">reset</button>
+            <div class="col-md-4">
+                <label>Admin password</label>
+                <input type="password" name="admin-pass" class="form-control" placeholder="Admin password" value="adminpass">
+            </div>
+            <div class="col-md-4">
+                <label>Refresh delay</label>
+                <input type="number" name="refresh-delay" class="form-control" placeholder="Refresh delay" min="1000" value="5000">
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section>
+        <h2>Live scores <button type="button" class="btn btn-warning" data-action="reset-graph">reset graph</button></h2>
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </section>
+
+    <section>
+        <h2>Admin</h2>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div>
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <input type="number" placeholder="size" class="form-control game-size" min="2" max="6" value="2">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" data-action="new">new game</button>
+                        </span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger" data-action="reset-scores">reset scores</button>
+            </div>
+        </div>
+    </section>
 
 </div>
 

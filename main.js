@@ -62,6 +62,36 @@ $(function() {
             yAxis: 1
         }]
     });
+
+    $('button[data-action="new"]').click(function() {
+        $.ajax({
+            url: SERVER_HOST + '/admin/new',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify($('.game-size').val()),
+            headers: {
+                adminpass: ADMIN_PASS
+            },
+            success: function() {
+                $.bootstrapGrowl('New game started', { type: 'success' });
+            },
+            error: showErrorDialog
+        });
+    });
+
+    $('button[data-action="reset"]').click(function() {
+        $.ajax({
+            url: SERVER_HOST + '/admin/reset',
+            type: 'POST',
+            headers: {
+                adminpass: ADMIN_PASS
+            },
+            success: function() {
+                $.bootstrapGrowl('Scores and games reset successfully', { type: 'success' });
+            },
+            error: showErrorDialog
+        });
+    });
 });
 
 function requestData() {

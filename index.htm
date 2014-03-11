@@ -8,11 +8,12 @@
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/3.0.9/highcharts.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
         <script type="text/javascript" src="main.js"></script>
 
         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/css/bootstrap.min.css">
         <style>
-        .options-title {
+        .title {
             cursor: pointer;
         }
         .arrow {
@@ -21,20 +22,35 @@
             height: 0;
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
-            border-bottom: 8px solid #999;
+            border-top: 8px solid #999;
         }
         .arrow.collapsed {
-            border-top: 8px solid #999;
-            border-bottom: none;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #999;
+            border-top: none;
+        }
+        .bootstrap-growl {
+            position: fixed !important;
+        }
+        #grid td {
+            text-align: center;
+            border-left: 1px solid #ddd;
+        }
+        #grid .found {
+            background-color: #ccc;
+        }
+        footer {
+            min-height: 15px;
         }
         </style>
     </head>
     <body>
 
 <div class="container">
-    <section>
-        <h2 class="options-title">Options <div class="arrow collapsed"></div></h2>
-        <div class="row options-block">
+    <section id="options">
+        <h2 class="title">Options <div class="arrow collapsed"></div></h2>
+        <div class="row block" style="display: none;">
             <div class="col-md-4">
                 <label>Server host</label>
                 <input type="text" name="server-host" class="form-control" placeholder="Server host" value="http://127.0.0.1:3000">
@@ -58,20 +74,41 @@
     <section>
         <h2>Admin</h2>
         <div class="row">
-            <div class="col-md-4"></div>
-            <div>
-                <div class="col-lg-2">
-                    <div class="input-group">
-                        <input type="number" placeholder="size" class="form-control game-size" min="2" max="6" value="2">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" data-action="new">new game</button>
-                        </span>
-                    </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input type="number" placeholder="size" class="form-control game-size" min="2" max="6" value="2">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" data-action="new">new game</button>
+                    </span>
                 </div>
+            </div>
+            <div class="col-md-3">
                 <button type="button" class="btn btn-danger" data-action="reset-scores">reset scores</button>
             </div>
         </div>
     </section>
+
+    <section id="logs">
+        <h2 class="title">Logs <div class="arrow collapsed"></div></h2>
+        <div class="row block" style="display: none;">
+            <div class="col-md-12">
+                <textarea class="form-control" rows="14" disabled="disabled" style="font-size: 12px;"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <section id="grid">
+        <h2 class="title">Grid <div class="arrow collapsed"></div></h2>
+        <div class="row block" style="display: none;">
+            <div class="col-md-12">
+                <table class="table">
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer></footer>
 
 </div>
 

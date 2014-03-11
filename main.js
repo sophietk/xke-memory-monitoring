@@ -75,9 +75,9 @@ $(function() {
         REFRESH_DELAY = $(this).val();
     });
 
-    $('.options-title').click(function() {
-        $('.options-block').toggle('slide');
-        $('.arrow').toggleClass('collapsed');
+    $('#options .title').click(function() {
+        $('#options .block').toggle('slide');
+        $('#options .arrow').toggleClass('collapsed');
     });
 
     $('button[data-action="new"]').click(function() {
@@ -120,6 +120,17 @@ $(function() {
             data: [],
             yAxis: 1
         }, false);
+        $.bootstrapGrowl('Graph reset', { type: 'success' });
+    });
+
+    $('#logs .title').click(function() {
+        $('#logs .block').toggle('slide');
+        $('#logs .arrow').toggleClass('collapsed');
+    });
+
+    $('#grid .title').click(function() {
+        $('#grid .block').toggle('slide');
+        $('#grid .arrow').toggleClass('collapsed');
     });
 });
 
@@ -152,12 +163,61 @@ function requestData() {
             adminpass: ADMIN_PASS
         },
         success: function(game) {
-            var serie = _.findWhere(chart.series, {name: "progress"});
+            var serie = _.findWhere(chart.series, {name: 'progress'});
             serie.addPoint([new Date().getTime(), game.progress], true);
-        }
+            if (!$('#grid .arrow').hasClass('collapsed')) {
+                var html = '';
+                _.each(game.grid, function(line) {
+                    html += '<tr>';
+                    _.each(line, function(square) {
+                        html += '<td class="' + color_class_map[square.color] + (square.found ? ' found"' : '"') + '>' + square.color + ' ' + square.symbol + '</td>';
+                    });
+                    html += '</tr>';
+                });
+                $('#grid table').html(html);
+            }
+        },
+        error: showErrorDialog
     });
 }
 
-function showErrorDialog(data) {
-    $.bootstrapGrowl(data.responseText, { type: 'danger' });
+var mergedLogs = [];
+function refreshLogs() {
+    $.ajax({
+        url: SERVER_HOST + '/admin/logs',
+        headers: {
+            adminpass: ADMIN_PASS
+        },
+        success: function(logs) {
+            logs = logs.reverse();
+            var newLogs = '';
+            logs.every(function(log) {
+                if (_.findWhere(mergedLogs, log)) return false;
+                mergedLogs.push(log);
+                newLogs = moment(log.date).format('HH:mm:ss') + ' - ' + log.player + ' - ' + log.action + '\n' + newLogs;
+                return true;
+            });
+            var $logs = $('#logs textarea');
+            $logs
+                .append(newLogs)
+                .animate({
+                    scrollTop: $logs[0].scrollHeight - $logs.height()
+                });
+        },
+        error: showErrorDialog
+    });
+    setTimeout(refreshLogs, REFRESH_DELAY);
 }
+refreshLogs();
+
+function showErrorDialog(data) {
+    if (data.responseText) $.bootstrapGrowl(data.responseText, { type: 'danger' });
+    else console.log('Erreur inconnue', data);
+}
+
+var color_class_map = {
+    'red': 'alert-danger',
+    'blue': 'alert-info',
+    'yellow': 'alert-warning',
+    'green': 'alert-success'
+};

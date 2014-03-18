@@ -53,15 +53,15 @@
         <div class="row block" style="display: none;">
             <div class="col-md-4">
                 <label>Server host</label>
-                <input type="text" name="server-host" class="form-control" placeholder="Server host" value="http://127.0.0.1:3000">
+                <input type="text" data-config="SERVER_HOST" class="form-control" placeholder="Server host" value="http://127.0.0.1:3000">
             </div>
             <div class="col-md-4">
                 <label>Admin password</label>
-                <input type="password" name="admin-pass" class="form-control" placeholder="Admin password" value="adminpass">
+                <input type="password" data-config="ADMIN_PASS" class="form-control" placeholder="Admin password" value="adminpass">
             </div>
             <div class="col-md-4">
                 <label>Refresh delay</label>
-                <input type="number" name="refresh-delay" class="form-control" placeholder="Refresh delay" min="1000" value="5000">
+                <input type="number" data-config="REFRESH_DELAY" class="form-control" placeholder="Refresh delay" min="1000" value="5000">
             </div>
         </div>
     </section>
@@ -71,7 +71,7 @@
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </section>
 
-    <section>
+    <section id="admin">
         <h2>Admin</h2>
         <div class="row">
             <div class="col-md-2"></div>
@@ -79,7 +79,7 @@
                 <div class="input-group">
                     <input type="number" placeholder="size" class="form-control game-size" min="2" max="6" value="2">
                     <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" data-action="new">new game</button>
+                        <button class="btn btn-success" type="button" data-action="/admin/new">new game</button>
                     </span>
                 </div>
             </div>
@@ -87,12 +87,12 @@
                 <div class="input-group">
                     <input type="number" placeholder="tempo (ms)" class="form-control turn-tempo" min="0" value="0">
                     <span class="input-group-btn">
-                        <button class="btn btn-warning" type="button" data-action="change-tempo">change tempo</button>
+                        <button class="btn btn-warning" type="button" data-action="/admin/tempo">change tempo</button>
                     </span>
                 </div>
             </div>
             <div class="col-md-3">
-                <button type="button" class="btn btn-danger" data-action="reset-scores">reset scores</button>
+                <button type="button" class="btn btn-danger" data-action="/admin/reset">reset scores</button>
             </div>
         </div>
     </section>

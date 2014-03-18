@@ -96,6 +96,22 @@ $(function() {
         });
     });
 
+    $('button[data-action="change-tempo"]').click(function() {
+        $.ajax({
+            url: SERVER_HOST + '/admin/tempo',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify($('.turn-tempo').val()),
+            headers: {
+                adminpass: ADMIN_PASS
+            },
+            success: function() {
+                $.bootstrapGrowl('Change turn temporizing successfully', { type: 'success' });
+            },
+            error: showErrorDialog
+        });
+    });
+
     $('button[data-action="reset-scores"]').click(function() {
         $.ajax({
             url: SERVER_HOST + '/admin/reset',

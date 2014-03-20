@@ -9,41 +9,11 @@
         <script type="text/javascript" src="lib/highcharts-3.0.9.min.js"></script>
         <script type="text/javascript" src="lib/jquery.bootstrap-growl-1.0.0.min.js"></script>
         <script type="text/javascript" src="lib/moment-2.5.1.min.js"></script>
+        <script type="text/javascript" src="lib/md5-3.1.2.min.js"></script>
         <script type="text/javascript" src="main.js"></script>
 
         <link rel="stylesheet" type="text/css" href="lib/bootstrap-3.1.0.min.css">
-        <style>
-        .title {
-            cursor: pointer;
-        }
-        .arrow {
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid #999;
-        }
-        .arrow.collapsed {
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 8px solid #999;
-            border-top: none;
-        }
-        .bootstrap-growl {
-            position: fixed !important;
-        }
-        #grid td {
-            text-align: center;
-            border-left: 1px solid #ddd;
-        }
-        #grid .found {
-            background-color: #ccc;
-        }
-        footer {
-            min-height: 15px;
-        }
-        </style>
+        <link rel="stylesheet" type="text/css" href="main.css">
     </head>
     <body>
 
@@ -66,9 +36,15 @@
         </div>
     </section>
 
-    <section>
+    <section id="scores">
         <h2>Live scores <button type="button" class="btn btn-warning" data-action="reset-graph">reset graph</button></h2>
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <div class="row">
+            <div id="chart-container" class="col-md-9"></div>
+            <div id="top-scores" class="col-md-3">
+                <h3>Top scores</h3>
+                <ul class="list-unstyled"></ul>
+            </div>
+        </div>
     </section>
 
     <section id="admin">

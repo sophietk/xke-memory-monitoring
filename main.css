@@ -1,0 +1,80 @@
+.title {
+    cursor: pointer;
+}
+
+.arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #999;
+}
+
+.arrow.collapsed {
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #999;
+    border-top: none;
+}
+
+.bootstrap-growl {
+    position: fixed !important;
+}
+
+#top-scores {
+    max-height: 440px;
+    overflow: hidden;
+}
+
+#top-scores li, ul {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#top-scores li {
+    height: 65px;
+}
+
+#top-scores li span {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#top-scores li img {
+    padding-bottom: 10px;
+    vertical-align: middle;
+    max-width: 20%;
+}
+
+#top-scores li .player {
+    width: 60%;
+    padding: 0 10px;
+}
+
+#top-scores li .score {
+    width: 20%;
+}
+
+#grid td {
+    text-align: center;
+    border-left: 1px solid #ddd;
+}
+
+#grid .found {
+    background-color: #ccc;
+}
+
+footer {
+    min-height: 15px;
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: auto;
+}

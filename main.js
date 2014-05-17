@@ -4,6 +4,7 @@ var config = {
     REFRESH_DELAY: 5 * 1000
 };
 var orderAnimDuration = 1000;
+var adminMode = false;
 
 $(function () {
     chart = new Highcharts.Chart({
@@ -72,6 +73,12 @@ $(function () {
         ]
     });
 
+    $('input[name="admin-mode"]').change(function () {
+        adminMode = $(this).is(':checked');
+        $('#admin, #logs, #grid, .admin-pass-div').toggle(adminMode);
+    });
+    $('input[name="admin-mode"]').change();
+
     $('.title').click(function () {
         $(this).siblings('.block').toggle('slide');
         $(this).find('.arrow').toggleClass('collapsed');
@@ -102,7 +109,7 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify($(this).parent().siblings('input').val()),
             headers: {
-                adminpass: config.ADMIN_PASS
+                'X-Adminpass': config.ADMIN_PASS
             },
             success: function () {
                 $.bootstrapGrowl('Admin change successful', { type: 'success' });
@@ -148,11 +155,16 @@ function requestData() {
         error: showErrorDialog
     });
 
+    clearTimeout(requestTimeout);
+    requestTimeout = setTimeout(requestData, config.REFRESH_DELAY);
+
+    if (!adminMode) return;
+    
     // Request game info
     $.ajax({
         url: config.SERVER_HOST + '/admin/game',
         headers: {
-            adminpass: config.ADMIN_PASS
+            'X-Adminpass': config.ADMIN_PASS
         },
         success: function (game) {
             var serie = _(chart.series).findWhere({name: 'progress'});
@@ -176,7 +188,7 @@ function requestData() {
     $.ajax({
         url: config.SERVER_HOST + '/admin/logs',
         headers: {
-            adminpass: config.ADMIN_PASS
+            'X-Adminpass': config.ADMIN_PASS
         },
         success: function (logs) {
             logs = logs.reverse();
@@ -196,9 +208,6 @@ function requestData() {
         },
         error: showErrorDialog
     });
-
-    clearTimeout(requestTimeout);
-    requestTimeout = setTimeout(requestData, config.REFRESH_DELAY);
 }
 
 var orderStackDelay = 0;
